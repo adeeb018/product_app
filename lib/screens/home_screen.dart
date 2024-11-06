@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_app/bloc/login/login_bloc.dart';
 import 'package:product_app/data/auth_repository.dart';
+import 'package:product_app/screens/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -133,7 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelected: (value) async {
             if (value == 'profile') {
               // navigate to profile screen
-              Navigator.pushNamed(context, '/profile');
+              final prefs = await SharedPreferences.getInstance();
+              final accessToken = prefs.getString('access_token');
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProfileScreen(accessToken: accessToken!),
+                ),
+              );
             } else if (value == 'logout') {
               context.read<LoginBloc>().add(LogOutEvent());
               // After clearing the token, navigate to the login screen
