@@ -24,7 +24,7 @@ class UserProfile {
     return UserProfile(
       id: json['id'],
       email: json['email'],
-      password: json['password'],  // You may not need this for display purposes
+      password: json['password'],
       name: json['name'],
       role: json['role'],
       avatar: json['avatar'],

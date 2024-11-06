@@ -14,19 +14,18 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     on<FetchProducts>((event, emit) async {
       emit(ProductsLoading());
       try {
-        final products = await productsRepository.fetchProducts();
+        final products = await productsRepository.fetchProducts(event.context);
         emit(ProductsLoaded(products: products));
       } catch (error) {
         emit(ProductsError(error: error.toString()));
       }
     });
+
     on<FetchProductsWithCategory>((event, emit) async {
       emit(ProductsLoading());
       try {
-        final products = await productsRepository.fetchProducts();
-        // for (var element in products) {
-        //   debugPrint(element.toString());
-        // }
+        final products = await productsRepository.fetchProducts(event.context);
+
         final filteredProducts = products.where((product) => product.partsCat == event.catId).toList();
         if (filteredProducts.isEmpty) {
           emit (ProductLoadedEmpty());

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:product_app/bloc/category/category_bloc.dart';
 import 'package:product_app/data/categories_repository.dart';
+import 'package:product_app/screens/product_details_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc/login/login_bloc.dart';
@@ -13,7 +14,7 @@ import 'screens/home_screen.dart';
 import 'screens/profile_screen.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensures async code runs before the app starts
+  WidgetsFlutterBinding.ensureInitialized();
 
   final prefs = await SharedPreferences.getInstance();
   final accessToken = prefs.getString('access_token');
@@ -23,7 +24,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final String? accessToken;
 
-  const MyApp({Key? key, required this.accessToken}) : super(key: key);
+  const MyApp({super.key, required this.accessToken});
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +44,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter App',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: accessToken != null && accessToken!.isNotEmpty?HomeScreen():LoginScreen(),
+        home: accessToken != null && accessToken!.isNotEmpty? HomeScreen() : LoginScreen(),
         routes: {
           '/home': (_) => HomeScreen(),
           '/profile': (_) => ProfileScreen(accessToken: accessToken!,),
           '/login' : (_) => LoginScreen(),
+          '/product-details': (_) => ProductDetailsPage(),
         },
       ),
     );

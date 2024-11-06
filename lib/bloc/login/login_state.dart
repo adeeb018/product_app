@@ -9,6 +9,12 @@ class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {}
 
+class BadEmailOrPasswordState extends LoginState {
+  final String message;
+
+  BadEmailOrPasswordState({required this.message});
+}
+
 class LoginFailure extends LoginState {
   final String error;
 
